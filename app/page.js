@@ -1,65 +1,57 @@
-import Image from "next/image";
+"use client"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Footer from "@/components/Footer";
+import Slideshow from "@/components/Slideshow";
 
 export default function Home() {
+  const router = useRouter()
+  const [text, setText] = useState("")
+
+  const createTree = () => {
+    router.push(`/generate?handle=${text}`)
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+      <section className="bg-[#d2e823] min-h-screen grid lg:grid-cols-2 items-center overflow-hidden">
+
+        {/* Left Content */}
+        <div className="flex flex-col justify-center px-8 lg:ml-[10vw] space-y-6">
+          <p className="text-[#254f1a] font-extrabold text-5xl md:text-6xl tracking-tighter">
+            A link in bio built for you.
           </p>
+          <p className="text-[#254f1a] text-lg font-medium max-w-md">
+            Join 70M+ people using Linktree for their link in bio. One link to help you share everything you create, curate and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
+          </p>
+
+          <div className="pt-4 flex gap-4">
+            <input value={text} onChange={(e)=>setText(e.target.value)} type="text" placeholder="Enter your handle" className="focus:outline-blue-600 bg-white text-black p-5 border-none rounded-xl w-1/2" />
+            <button onClick={createTree} className="bg-[#254f1a] text-white px-8 py-4 rounded-full font-semibold cursor-pointer">
+              Claim your Linktree
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Right Content (Slideshow) */}
+        <div className="flex items-center justify-center lg:mr-[10vw] p-10 relative">
+          {/* Background Blob/Decoration (Optional, matches screenshot vibe) */}
+          <div className="absolute w-[120%] h-[120%] bg-[radial-gradient(circle,rgba(255,255,255,0.4)_0%,transparent_70%)] pointer-events-none" />
+
+          <Slideshow />
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="bg-[#502274] min-h-screen flex flex-col justify-center items-center ">
+        <p className="text-5xl font-bold mt-5">Jumpstart your corner of the internet today</p>
+        <div className="p-4 flex gap-5">
+          <input type="text" placeholder="linktr.ee/" className="bg-white text-black p-5 border-none rounded-xl" />
+          <button className="bg-[#d2e823] text-black p-3 rounded-4xl cursor-pointer px-6 font-bold">claim your Linktree</button>
+        </div>
+        <div className="p-16">
+          <Footer />
+        </div>
+      </section>
+    </main>
   );
 }
